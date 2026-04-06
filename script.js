@@ -10,9 +10,20 @@ let duration = 600; // 10 minutes
 
 // PLAY / PAUSE
 playBtn.addEventListener("click", () => {
+	if(audio.currentTime === 0){
+		audio.currentTime = 0;
+	}
   if (audio.paused) {
     audio.play();
     video.play();
+
+	let remaining = duration - audio.currentTime;
+	let minutes = Math.floor(duration / 60);
+    let seconds = Math.floor(duration % 60);
+
+	  timeDisplay.textContent =
+      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+	  
   } else {
     audio.pause();
     video.pause();
@@ -42,11 +53,6 @@ timeButtons.forEach(button => {
     if (this.id === "long-mins") duration = 600;
 
     // update display immediately
-    let minutes = Math.floor(duration / 60);
-    let seconds = Math.floor(duration % 60);
-
-    timeDisplay.textContent =
-      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   });
 });
 
